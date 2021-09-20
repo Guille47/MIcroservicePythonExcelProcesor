@@ -19,6 +19,19 @@ def add_task():
         return jsonify(task)
     return jsonify({'message': 'Internal Error'})
 
+@tasks_bp.route('/tasks', methods=['POST'])
+def add_task_with_excel():
+    title = request.json['title']
+    created_date = datetime.now().strftime("%x") # 5/22/2021
+
+    data = (title, created_date)
+    task_id = tasks.insert_task(data)
+
+    if task_id:
+        task = tasks.select_task_by_id(task_id)
+        return jsonify(task)
+    return jsonify({'message': 'Internal Error'})
+
 
 @tasks_bp.route('/tasks', methods=['GET'])
 def get_tasks():

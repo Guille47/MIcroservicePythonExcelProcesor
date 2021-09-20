@@ -3,7 +3,6 @@ from sqlite3 import Error
 
 from .connection import create_connection
 
-
 def read_file(path):
     with open(path, "r") as sql_file:
         return sql_file.read()
