@@ -45,8 +45,10 @@ def add_uploads_with_excel():
     if success:
         data = pd.read_excel(filePath)
         data = pd.DataFrame(data)
-        data.to_sql(os.path.splitext(filename)[0], con=engine, if_exists='replace')
-        return jsonify({'message': 'Esperando response'})
+        filename = os.path.splitext(filename)[0]
+        data.to_sql(filename, con=engine, if_exists='replace')
+        os.remove(filePath)
+        return jsonify({'message': 'File inserted succesfully in the table' + filename})
     else:
         resp = jsonify(errors)
         resp.status_code = 500
